@@ -219,8 +219,8 @@ func (js *JSONStringify) String(s interface{}) string {
 	return js.Sb.String()
 }
 
-// Stringify stringify
-func Stringify(s interface{}, replacer Replacer) string {
+// String stringify
+func String(s interface{}, replacer Replacer) string {
 	js := jsPool.Get().(*JSONStringify)
 	js.Sb.Reset()
 	js.Replacer = replacer

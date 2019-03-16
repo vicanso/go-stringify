@@ -87,9 +87,9 @@ func replacer(key string, value interface{}) (bool, string) {
 	return false, ""
 }
 
-func TestStringify(t *testing.T) {
+func TestString(t *testing.T) {
 	s := getTestData()
-	str := Stringify(s, replacer)
+	str := String(s, replacer)
 	checkList := []string{
 		`"account":"t***t"`,
 		`"password":"***"`,
@@ -116,12 +116,12 @@ func TestStringify(t *testing.T) {
 	}
 }
 
-func BenchmarkStringify(b *testing.B) {
+func BenchmarkString(b *testing.B) {
 	b.ReportAllocs()
 	s := getTestData()
 
 	for i := 0; i < b.N; i++ {
-		Stringify(s, nil)
+		String(s, nil)
 	}
 }
 
