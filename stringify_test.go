@@ -121,7 +121,7 @@ func BenchmarkStringify(b *testing.B) {
 	s := getTestData()
 
 	for i := 0; i < b.N; i++ {
-		Stringify(s, replacer)
+		Stringify(s, nil)
 	}
 }
 
