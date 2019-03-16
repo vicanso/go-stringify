@@ -36,7 +36,7 @@ type (
 		Replacer Replacer
 	}
 	// Replacer replace function
-	Replacer func(string, interface{}) (replace bool, value string)
+	Replacer func(key string, value interface{}) (replace bool, newValue string)
 )
 
 // GetBufferSize get initialize buffer size
@@ -126,14 +126,10 @@ func (js *JSONStringify) Map(s interface{}) {
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
-	iter := v.MapRange()
 	first := true
 	sb.WriteRune('{')
-	for {
-		if !iter.Next() {
-			break
-		}
-		value := iter.Value()
+	for _, index := range v.MapKeys() {
+		value := v.MapIndex(index)
 		if value.Kind() == reflect.Ptr {
 			value = value.Elem()
 		}
@@ -144,7 +140,7 @@ func (js *JSONStringify) Map(s interface{}) {
 			sb.WriteRune(',')
 		}
 		first = false
-		key := cast.ToString(iter.Key().Interface())
+		key := cast.ToString(index.Interface())
 		sb.WriteString(`"`)
 		sb.WriteString(key)
 		sb.WriteString(`":`)
@@ -206,7 +202,7 @@ func (js *JSONStringify) do(key string, s interface{}) {
 	case reflect.String:
 		sb.WriteRune('"')
 		str := v.Interface().(string)
-		sb.WriteString(strings.ReplaceAll(str, `"`, `\"`))
+		sb.WriteString(strings.Replace(str, `"`, `\"`, -1))
 		sb.WriteRune('"')
 	default:
 		sb.WriteString(cast.ToString(v.Interface()))

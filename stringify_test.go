@@ -37,7 +37,7 @@ func getTestData() *Me {
 		Name: "tom",
 	})
 	peter := &Other{
-		Name: "peter",
+		Name: "peter\" don\"",
 	}
 	return &Me{
 		ID:       "",
@@ -99,14 +99,14 @@ func TestString(t *testing.T) {
 		`"fav":"reading"`,
 		`"weight":70`,
 		`"male":true`,
-		`"bestFriend":{"name":"peter"}`,
+		`"bestFriend":{"name":"peter\" don\""}`,
 		`"boss":{"name":"boss"}`,
 		`"leader":{"age":30}`,
 		`{"name":"jack"}`,
 		`{"name":"tas"}`,
 		`{"name":"tom"}`,
 	}
-	if len(str) != 304 {
+	if len(str) != 312 {
 		t.Fatalf("json stringify fail")
 	}
 	for _, v := range checkList {
