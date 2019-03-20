@@ -91,14 +91,16 @@ func (js *JSONStringify) St(s interface{}) {
 			tagName = defaultTagName
 		}
 		tag := field.Tag.Get(tagName)
+		// 如果忽略则跳过
+		if tag == "-" {
+			continue
+		}
+
 		if tag != "" {
 			arr := strings.Split(tag, ",")
 			key = arr[0]
 		}
-		// 如果忽略则跳过
-		if key == "-" {
-			continue
-		}
+
 		if strings.Contains(tag, "omitempty") {
 			zero := reflect.Zero(value.Type()).Interface()
 			current := value.Interface()
